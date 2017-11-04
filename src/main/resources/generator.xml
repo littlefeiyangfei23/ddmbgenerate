@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<!-- 连接mysql驱动包所在位置，要是用的Oracle，就换jar包，这一条每次用之前要看看改不改 -->
+	<classPathEntry location="D:\maven-3.3.9\repo\mysql\mysql-connector-java\5.1.40\mysql-connector-java-5.1.40.jar"/>
+	<context id="db2tables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<!--是否去除自动生成的注释 true是,false否-->
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<!-- 数据库连接信息，驱动类、连接地址、用户名、密码，数据库不在本地，不能用localhost,用对应的IP,这一条每次用之前要看看改不改 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/ddshop?characterEncoding=UTF-8" userId="root"
+			password="root">
+		</jdbcConnection>
+        <!-- 对Oracle进行反向工程的时候，用下面这一段代码，银行业务，用这个多 -->
+		<!--<jdbcConnection driverClass="oracle.jdbc.OracleDriver"-->
+						<!--connectionURL="jdbc:oracle:thin:@localhost:1521:orcl" userId="scott"-->
+						<!--password="tigger">-->
+		<!--</jdbcConnection>-->
+
+		<!--默认false,把JDBC DECIMAL和NUMBERIC类型解析为Integer-->
+		<!--为true时,把JDBC DECIMAL和NUMBERIC类型解析为java.math.BigDecimal-->
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+
+		<!-- 生成POJO类    这一条每次用之前要看看改不改-->
+		<!-- targetPackage的值就是待会儿pojo存放的位置，现在这里倒一次，再拷到对应工程，正确率高一点            targetProject这个是包的位置-->
+		<!-- 反向工程生成是追加，不是替换，所以做第二次生成的时候，把之前的删除干净。 -->
+		<javaModelGenerator targetPackage="com.qf.ddshop.pojo.po"
+			targetProject="src/main/java/">
+			<!--是否让schema作为包的后缀，schema是用户名的意思，选了true,那么用户名会代替targetPackage中的po-->
+			<property name="enableSubPackages" value="false" />
+			<!--去除前后空格-->
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+
+		<!-- 生成mapper映射文件，也有人把这个建在src/main/resources/     这一条每次用之前要看看改不改-->
+		<sqlMapGenerator targetPackage="com.qf.ddshop.dao"
+			targetProject="src/main/java/">
+			<!--同上-->
+			<property name="enableSubPackages" value="false" />
+		</sqlMapGenerator>
+
+		<!-- 生成mapper接口    -->
+		<!--  这一条每次用之前要看看改不改    -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.qf.ddshop.dao" targetProject="src/main/java/">
+			<!--是否让schema作为包的后缀，schema是用户名的意思，选了true,那么用户名会代替targetPackage中的po-->
+			<property name="enableSubPackages" value="false" />
+		</javaClientGenerator>
+
+
+		<!-- 指定数据库表 -->
+		<!--  这一条每次用之前要看看改不改    -->
+		<table schema="" tableName="tb_content"></table>
+		<table schema="" tableName="tb_content_category"></table>
+		<table schema="" tableName="tb_item"></table>
+		<table schema="" tableName="tb_item_cat"></table>
+		<table schema="" tableName="tb_item_desc"></table>
+		<table schema="" tableName="tb_item_param"></table>
+		<table schema="" tableName="tb_item_param_item"></table>
+		<table schema="" tableName="tb_order"></table>
+		<table schema="" tableName="tb_order_item"></table>
+		<table schema="" tableName="tb_order_shipping"></table>
+		<table schema="" tableName="tb_user"></table>
+
+        <!-- 下面这一段是<table schema="" tableName="tb_content"></table>的详细写法，但是上面的已经可以用了 -->
+		<!--<table tableName="UserInfo" domainObjectName="UserInfo"-->
+			<!--enableCountByExample="false" enableUpdateByExample="false"-->
+			<!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			<!--selectByExampleQueryId="false" />-->
+
+	</context>
+</generatorConfiguration>
